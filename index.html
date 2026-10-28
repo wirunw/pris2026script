@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#102d4c"><meta name="description" content="PRIS 2026 Mobile MC Script พี่หมีและน้องนุ่น อ่านบนเวทีแบบออฟไลน์"><title>PRIS 2026 | Mobile MC Script</title><style>
+:root{color-scheme:light;--bg:#f2f5fa;--surface:#fff;--ink:#152744;--muted:#586780;--border:#dce3ee;--accent:#145b9c;--accent-light:#e9f3ff;--nun:#a53a81;--nun-light:#fff0f9;--font:25px;--line:1.75;--shadow:0 10px 26px rgba(27,51,89,.09)}
+body.night{color-scheme:dark;--bg:#081321;--surface:#101f33;--ink:#f3f5fb;--muted:#b0bbcc;--border:#304258;--accent:#79bdff;--accent-light:#142d4b;--nun:#ff9cd4;--nun-light:#352135;--shadow:0 10px 24px rgba(0,0,0,.12)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family: -apple-system,BlinkMacSystemFont,'Thonburi','Noto Sans Thai','Tahoma',sans-serif;-webkit-font-smoothing:antialiased}
+button,select{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}button:disabled{opacity:.3;cursor:default}
+.appbar{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 5px 12px rgba(0,0,0,.045)}
+.top{max-width:900px;margin:auto;display:flex;align-items:center;gap:10px;padding:10px 14px 8px}.brand{flex:1;min-width:0}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.09em;color:var(--accent)}.brand-title{font-size:17px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.quick{display:flex;gap:6px}
+.control{background:var(--bg);color:var(--ink);border:1px solid var(--border);border-radius:12px;min-width:41px;height:43px;padding:0 9px;font-size:17px;font-weight:800}.control[aria-pressed=true]{background:var(--accent-light);border-color:var(--accent)}
+.tools{max-width:900px;margin:auto;padding:0 14px 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}.tool-select{flex:1;min-width:165px;border:1px solid var(--border);background:var(--bg);color:var(--ink);border-radius:12px;height:43px;padding:0 10px;font-size:14px;font-weight:700}.toggle{display:flex;border:1px solid var(--border);border-radius:12px;overflow:hidden}.toggle button{height:42px;border:0;background:var(--bg);color:var(--muted);padding:0 13px;font-size:13px;font-weight:800}.toggle button.active{background:var(--accent-light);color:var(--accent)}
+.progress{height:4px;background:var(--bg)}.progress-fill{height:100%;width:0;background:var(--accent);transition:width .2s}
+main{max-width:850px;margin:auto;padding:18px 14px 155px}.intro{border:1px solid var(--border);border-radius:16px;padding:18px 18px;background:var(--surface);margin-bottom:14px}.intro h1{font-size:22px;line-height:1.4;margin:0 0 7px}.intro p{margin:6px 0;color:var(--muted);font-size:14px;line-height:1.7}.intro strong{color:var(--ink)}.label-line{font-size:12px;color:var(--muted)}
+.cue{background:var(--surface);border-radius:18px;border:1px solid var(--border);padding:21px 18px 23px;margin-bottom:15px;box-shadow:var(--shadow);border-top:5px solid var(--accent)}.cue.role-nun{border-top-color:var(--nun)}.cue.role-backup{border-top-color:var(--muted)}.cue.role-both{border-top-color:#1b996c}.cue-top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}.pill{border-radius:999px;font-size:14px;font-weight:850;background:var(--accent-light);color:var(--accent);padding:6px 12px}.role-nun .pill{color:var(--nun);background:var(--nun-light)}.role-backup .pill{color:var(--muted);background:var(--bg)}.role-both .pill{background:#d9f8ec;color:#117a56}time{font-size:13px;color:var(--muted);font-weight:800;white-space:nowrap}.cue h2{font-size:19px;line-height:1.48;margin:0 0 15px;overflow-wrap:anywhere}.detail{font-size:14px;line-height:1.7;color:var(--muted);border-left:3px solid var(--border);padding:7px 11px;margin-bottom:17px;overflow-wrap:anywhere}.cue-text{font-size:var(--font);line-height:var(--line);word-break:normal;overflow-wrap:anywhere}.cue-text p{margin:0 0 1.05em}.cue-text p:last-child{margin-bottom:0}.cue-text strong{font-weight:850;color:var(--accent)}.role-nun .cue-text strong{color:var(--nun)}.cue-text .direction{font-size:.65em;line-height:1.6;color:var(--muted);background:var(--bg);padding:8px 11px;border-radius:10px;font-weight:700;margin:.3em 0 .95em}.stage-note{margin-top:20px;padding:12px 13px;font-size:14px;line-height:1.6;color:var(--muted);background:var(--bg);border-radius:10px}.stage-note:before{content:'คิวเวที  ';font-weight:800;color:var(--accent)}
+.context{display:none;background:var(--nun-light);color:var(--nun);border-radius:13px;margin:0 0 13px;padding:11px 14px;font-size:13px;line-height:1.5}.context strong{font-weight:850}.current-count{text-align:center;color:var(--muted);font-size:13px;margin-top:13px;font-weight:700}.dock{position:fixed;bottom:0;left:0;right:0;z-index:15;background:var(--surface);border-top:1px solid var(--border);padding:11px max(14px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));box-shadow:0 -4px 18px rgba(0,0,0,.06)}.dock-content{max-width:850px;margin:auto;display:flex;gap:9px;align-items:center}.dock button{height:55px;border-radius:13px;font-size:18px;font-weight:850;border:1px solid var(--border)}.prev{width:30%;background:var(--bg);color:var(--ink)}.next{flex:1;background:#1464a5;border-color:#1464a5!important;color:#fff}.night .next{background:#317dbd}.cue-context{font-size:12px;color:var(--muted);max-width:850px;margin:0 auto 7px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body.mode-cue .cue{display:none}body.mode-cue .cue.selected{display:block}body.mode-cue .context{display:block}body.mode-scroll .dock{display:none}body.mode-scroll main{padding-bottom:40px}body.mode-scroll .cue{display:block}body.mode-scroll.only-me .role-nun{display:none}body.mode-scroll .current-count{display:none}
+body:not(.mode-cue):not(.mode-scroll) .dock{display:none}
+@media (min-width:600px){.brand-title{font-size:20px}.cue{padding:27px 32px}.intro{padding:20px 27px}.cue h2{font-size:22px}}
+@media (max-width:365px){.top{padding-left:10px;padding-right:10px}.tools{padding-left:10px;padding-right:10px}.toggle button{padding:0 9px}.brand-title{font-size:15px}.control{min-width:38px;padding:0 7px}}
+@media print{.appbar,.dock,.context{display:none!important}.cue{display:block!important;box-shadow:none;break-inside:avoid}main{padding:0}body{background:white}}
+</style></head>
+<body><header class="appbar"><div class="top"><div class="brand"><div class="eyebrow">PRIS 2026 · JUPITER 12</div><div class="brand-title">🎤 สคริปต์พิธีกรบนมือถือ</div></div><div class="quick"><button class="control" id="fontDown" title="ลดขนาดอักษร" aria-label="ลดขนาดอักษร">A−</button><button class="control" id="fontUp" title="เพิ่มขนาดอักษร" aria-label="เพิ่มขนาดอักษร">A+</button><button class="control" id="dark" title="สลับกลางคืน" aria-label="สลับโหมดกลางคืน" aria-pressed="false">☾</button></div></div>
+<div class="tools"><select id="section" class="tool-select" aria-label="เลือกช่วงรายการ"><option value="start">01 • เปิดงานและต้อนรับ</option><option value="ai">02 • เสวนา AI กับผู้บริโภค</option><option value="future">03 • Future Pharmacy Practice</option><option value="research">04 • Oral Presentation เภสัชกร</option><option value="student">05 • Oral Presentation นักศึกษา</option><option value="end">06 • กล่าวปิดรายการ</option><option value="extra">07 • ประกาศสำรอง</option></select><div class="toggle" aria-label="เลือกบทพูด"><button type="button" data-role-filter="me" class="active" aria-pressed="true">บทพี่หมี</button><button type="button" data-role-filter="all" aria-pressed="false">ทั้งคู่</button></div><div class="toggle" aria-label="รูปแบบการอ่าน"><button type="button" data-view="cue" class="active" aria-pressed="true">ทีละคิว</button><button type="button" data-view="scroll" aria-pressed="false">เลื่อนยาว</button></div></div><div class="progress"><div class="progress-fill" id="progress"></div></div></header>
+<main><div class="intro"><h1>PRIS 2026 — Mobile MC Script</h1><p><strong>29 ต.ค. 2569 · 10:40–16:30 · ห้อง JUPITER 12</strong></p><p>บทพี่หมี: ฉบับ Storytelling | บทน้องนุ่น: ตามต้นฉบับ ไม่แก้ข้อความ</p><p>ใช้ปุ่ม <strong>ถัดไป / ย้อนกลับ</strong> สำหรับเดินคิวบนเวที • เลือก <strong>ทั้งคู่</strong> เพื่อดูบทรับ–ส่ง • กด <strong>A+</strong> ขยายตัวอักษร • ระบบจำคิวล่าสุดบนเครื่อง</p><div class="label-line">ไฟล์นี้อ่านได้ออฟไลน์ ไม่ต้องใช้อินเทอร์เน็ตหลังบันทึกไฟล์</div></div>
+<div class="context" id="context"></div><div class="reader"><article class="cue role-nun" id="cue-0" data-idx="0" data-role="nun" data-section="start">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>10:40</time></div>
+      <h2>ก่อนเปิดงาน — เชิญเข้าที่นั่ง</h2>
+      
+      <div class="cue-text"><p>เรียนท่านผู้มีเกียรติและผู้เข้าร่วมประชุมทุกท่านค่ะ ขณะนี้ใกล้ถึงเวลาเริ่มการประชุมวิชาการภายในห้อง JUPITER 12 แล้วนะคะ ขอเรียนเชิญทุกท่านเข้าประจำที่นั่ง และขอความกรุณาปรับโทรศัพท์มือถือเป็นระบบสั่น เพื่อไม่ให้รบกวนการประชุมค่ะ</p><p>ก่อนเริ่มการประชุม ขอเชิญทุกท่านรับชมวิดีโอประชาสัมพันธ์งาน PRIS และวิดีโอแนะนำความปลอดภัยของสถานที่จัดประชุมค่ะ</p></div>
+      <aside class="stage-note">ทีมเทคนิค: คลิป PRIS → VDO Safety Impact → เปิดตัวพิธีกร</aside>
+    </article><article class="cue role-me" id="cue-1" data-idx="1" data-role="me" data-section="start">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>11:00</time></div>
+      <h2>เปิดงาน · แนะนำตัว</h2>
+      
+      <div class="cue-text"><p class="direction">[ยิ้ม / มองผู้ฟัง]</p><p>สวัสดีครับ ท่านวิทยากร ผู้ทรงคุณวุฒิ และพี่น้องชาวเภสัชกรรมทุกท่านครับ</p><p>ยินดีต้อนรับทุกท่านเข้าสู่การประชุมวิชาการ วิจัยและนวัตกรรมทางเภสัชกรรมระดับชาติ ครั้งที่ 2 ประจำปี 2569 หรือ <strong>PRIS 2026</strong> ครับ</p><p class="direction">[เว้นจังหวะ]</p><p>วันนี้ผมคิดว่าเป็นอีกหนึ่งวันที่น่าสนใจมากสำหรับวิชาชีพของเรานะครับ</p><p>เพราะถ้ามองย้อนกลับไป เราจะเห็นว่าโลกของเภสัชกรรมเปลี่ยนแปลงอยู่ตลอดเวลา</p><p>แต่สิ่งหนึ่งที่ไม่เคยเปลี่ยน คือการที่พวกเราพยายามหาคำตอบว่า...</p><p><strong>เราจะทำให้ประชาชนได้รับบริการสุขภาพที่ดีขึ้น ปลอดภัยขึ้น และเข้าถึงได้มากขึ้นอย่างไร</strong></p><p class="direction">[เว้นจังหวะ]</p><p>และผมเชื่อว่า งานวิจัยกับนวัตกรรมนี่แหละครับ เป็นส่วนสำคัญที่จะช่วยให้เราไปถึงจุดนั้นได้</p><p>วันนี้เราจะได้เห็นตัวอย่างที่น่าสนใจมากมายครับ</p><p>ก่อนอื่น ขออนุญาตแนะนำตัว ผม อาจารย์ ดร.เภสัชกรวิรุณ เวชศิริ ครับ</p></div>
+      <aside class="stage-note">ต่อด้วยน้องนุ่นแนะนำตัว</aside>
+    </article><article class="cue role-nun" id="cue-2" data-idx="2" data-role="nun" data-section="start">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>11:00</time></div>
+      <h2>น้องนุ่น · แนะนำตัวและภาพรวมวัน</h2>
+      
+      <div class="cue-text"><p>และดิฉัน เภสัชกรหญิงชนิตรา อินทร์ศิริ ค่ะ</p><p>วันนี้เราทั้งสองท่านได้รับเกียรติให้ทำหน้าที่พิธีกรประจำห้อง JUPITER 12 ซึ่งตลอดทั้งวันจะมีกิจกรรมที่น่าสนใจ ทั้งการเสวนาแลกเปลี่ยนองค์ความรู้และการนำเสนอผลงานวิจัยจากเภสัชกรและนิสิตนักศึกษาเภสัชศาสตร์ค่ะ</p></div>
+      
+    </article><article class="cue role-me" id="cue-3" data-idx="3" data-role="me" data-section="start">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>11:00</time></div>
+      <h2>ธีมงาน · เชื่อมเข้าสู่ AI</h2>
+      
+      <div class="cue-text"><p class="direction">[มองผู้ฟัง]</p><p>สำหรับ PRIS 2026 ในปีนี้ จัดขึ้นภายใต้แนวคิด</p><p><strong>“Pharmacy Research &amp; Innovation Driving Sustainable Healthcare”</strong></p><p>หรือการใช้งานวิจัยและนวัตกรรมทางเภสัชกรรม เป็นพลังขับเคลื่อนระบบสุขภาพอย่างยั่งยืนครับ</p><p>ผมชอบคำว่า <em>Driving</em> ในธีมปีนี้นะครับ</p><p>เพราะงานวิจัยไม่ได้มีคุณค่าเพียงแค่การตีพิมพ์ หรือการนำเสนอในห้องประชุมเท่านั้น</p><p class="direction">[เน้น]</p><p>แต่คุณค่าที่สำคัญไม่แพ้กัน คือการนำความรู้เหล่านั้นไปขับเคลื่อนให้เกิดการเปลี่ยนแปลงจริง ๆ</p><p>และวันนี้ ห้องของเราก็มีประเด็นที่น่าติดตามมากครับ</p><p>เริ่มต้นกันด้วยเรื่องที่ผมคิดว่าหลายท่านกำลังให้ความสนใจ และอาจกำลังเผชิญอยู่ในงานของตัวเองด้วย</p><p>นั่นคือ <strong>AI กับการคุ้มครองผู้บริโภคด้านสุขภาพ</strong> ครับ</p></div>
+      
+    </article><article class="cue role-nun" id="cue-4" data-idx="4" data-role="nun" data-section="ai">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>11:00</time></div>
+      <h2>เกริ่น AI · น้องนุ่น</h2>
+      
+      <div class="cue-text"><p>ในปัจจุบัน เทคโนโลยีปัญญาประดิษฐ์ หรือ AI ได้เข้ามามีบทบาทในระบบสุขภาพอย่างรวดเร็ว ไม่ว่าจะเป็นการเข้าถึงข้อมูลสุขภาพ การใช้ผลิตภัณฑ์สุขภาพ หรือการตัดสินใจของผู้บริโภคค่ะ</p><p>สิ่งเหล่านี้นำมาซึ่งโอกาสใหม่ ๆ ขณะเดียวกันก็ทำให้เกิดคำถามสำคัญว่า เราจะพัฒนาระบบการคุ้มครองผู้บริโภคให้เท่าทันกับการเปลี่ยนแปลงดังกล่าวได้อย่างไร</p></div>
+      
+    </article><article class="cue role-me" id="cue-5" data-idx="5" data-role="me" data-section="ai">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>11:00</time></div>
+      <h2>AI ฉลาดขึ้น · ผู้บริโภคปลอดภัยขึ้นไหม?</h2>
+      
+      <div class="cue-text"><p class="direction">[ยิ้มเล็กน้อย]</p><p>ผมว่าประเด็นนี้น่าสนใจมากนะครับ</p><p>ทุกวันนี้เราเห็น AI เข้ามาช่วยตอบคำถามสุขภาพ ช่วยค้นหาข้อมูล หรือแม้แต่ช่วยสนับสนุนการตัดสินใจได้อย่างรวดเร็ว</p><p>แต่ผมอยากชวนทุกท่านลองคิดดูครับว่า...</p><p class="direction">[เว้นจังหวะ]</p><p><strong>ถ้าเทคโนโลยีฉลาดขึ้น ผู้บริโภคจะปลอดภัยขึ้นโดยอัตโนมัติหรือเปล่า?</strong></p><p class="direction">[มองผู้ฟัง]</p><p>ผมคิดว่าคำตอบอาจไม่ง่ายขนาดนั้นนะครับ</p><p>เพราะความสามารถของเทคโนโลยีเป็นเรื่องหนึ่ง แต่การทำให้ประชาชนได้รับประโยชน์อย่างปลอดภัย เป็นอีกเรื่องหนึ่ง</p><p>นี่จึงนำมาสู่คำถามสำคัญว่า</p><p><strong>เราจะวัดได้อย่างไร ว่าระบบคุ้มครองผู้บริโภคของเราทำงานได้ดีจริง ๆ ในยุค AI</strong></p><p>ซึ่งเป็นหัวใจของการเสวนาในช่วงนี้ครับ</p><p>โดยวิทยาลัยการคุ้มครองผู้บริโภคด้านยา ราชวิทยาลัยเภสัชกรรม สภาเภสัชกรรม ได้จัดการเสวนาในหัวข้อ</p><p><strong>“ตัวชี้วัดการคุ้มครองผู้บริโภคด้านสุขภาพในยุค AI”</strong></p></div>
+      
+    </article><article class="cue role-nun" id="cue-6" data-idx="6" data-role="nun" data-section="ai">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>11:00</time></div>
+      <h2>น้องนุ่น · เชิญผู้ดำเนินรายการ</h2>
+      <div class="detail">รศ.ภก.ดร.สุรศักดิ์ เสาแก้ว · คณบดีคณะเภสัชศาสตร์ มหาวิทยาลัยพะเยา</div>
+      <div class="cue-text"><p>สำหรับการเสวนาในช่วงนี้ เราได้รับเกียรติจาก รองศาสตราจารย์ เภสัชกร ดร.สุรศักดิ์ เสาแก้ว คณบดีคณะเภสัชศาสตร์ มหาวิทยาลัยพะเยา ให้เกียรติเป็นผู้ดำเนินรายการค่ะ ขอเรียนเชิญค่ะ</p></div>
+      <aside class="stage-note">ส่งเวทีให้ Moderator ไม่ต้องแนะนำวิทยากรทั้งสามท่าน</aside>
+    </article><article class="cue role-nun" id="cue-7" data-idx="7" data-role="nun" data-section="ai">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>11:50</time></div>
+      <h2>น้องนุ่น · ขอบคุณผู้ดำเนินรายการ</h2>
+      
+      <div class="cue-text"><p>ขอขอบพระคุณรองศาสตราจารย์ เภสัชกร ดร.สุรศักดิ์ เสาแก้ว ผู้ดำเนินรายการ และวิทยากรผู้ทรงคุณวุฒิทุกท่านเป็นอย่างสูงค่ะ สำหรับการแลกเปลี่ยนมุมมองและองค์ความรู้ที่น่าสนใจเกี่ยวกับการคุ้มครองผู้บริโภคด้านสุขภาพในยุค AI</p></div>
+      
+    </article><article class="cue role-me" id="cue-8" data-idx="8" data-role="me" data-section="ai">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>11:50</time></div>
+      <h2>ขอบคุณและชวนคิดกลับไปต่อ</h2>
+      
+      <div class="cue-text"><p class="direction">[มองผู้ฟัง]</p><p>ขอบพระคุณวิทยากรทุกท่านอีกครั้งครับ</p><p>ผมคิดว่าประเด็นสำคัญที่อยากชวนทุกท่านนำกลับไปคิดต่อก็คือ...</p><p><strong>ในวันที่เทคโนโลยีพัฒนาเร็วขึ้น ระบบที่ดูแลความปลอดภัยของประชาชนก็ต้องพัฒนาให้ทันเช่นกัน</strong></p><p>เพราะสุดท้ายแล้ว เป้าหมายของเราคงไม่ใช่แค่การมี AI ที่เก่งขึ้นนะครับ</p><p>แต่คือการมีระบบสุขภาพที่สามารถใช้เทคโนโลยีเหล่านั้นได้อย่างรับผิดชอบ มีคุณภาพ และสร้างประโยชน์ให้ประชาชนได้จริง</p><p>ขอบพระคุณครับ</p></div>
+      
+    </article><article class="cue role-nun" id="cue-9" data-idx="9" data-role="nun" data-section="ai">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>11:50</time></div>
+      <h2>น้องนุ่น · QR ประเมิน / พักกลางวัน</h2>
+      
+      <div class="cue-text"><p>ก่อนพัก ขอเชิญทุกท่านสแกน QR Code เพื่อทำแบบประเมิน Session นี้ และรับสิทธิ์หมุนวงล้อลุ้นของที่ระลึกจาก PRIS 2026 ด้วยนะคะ</p><p>สำหรับกิจกรรมถัดไป จะเริ่มในเวลา 13.00 น. ขอเชิญทุกท่านกลับเข้าห้องประชุมตามเวลาด้วยค่ะ</p></div>
+      <aside class="stage-note">พักกลางวัน นัดกลับห้อง 13:00</aside>
+    </article><article class="cue role-me" id="cue-10" data-idx="10" data-role="me" data-section="future">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>13:00</time></div>
+      <h2>เปิดภาคบ่าย · อนาคตวิชาชีพ</h2>
+      
+      <div class="cue-text"><p class="direction">[ยิ้ม / น้ำเสียงสดใส]</p><p>สวัสดีอีกครั้งครับ ยินดีต้อนรับทุกท่านกลับเข้าสู่การประชุมในช่วงบ่าย</p><p>หวังว่าทุกท่านจะได้พักรับประทานอาหารกลางวันกันเรียบร้อยแล้วนะครับ</p><p>เพราะช่วงบ่ายนี้เราจะพาทุกท่านเดินทางไปดู <strong>อนาคตของวิชาชีพเภสัชกรรม</strong> กันครับ</p><p class="direction">[เว้นจังหวะ]</p><p>เวลาพูดถึงเภสัชกร หลายคนอาจนึกถึงเรื่องยา การจ่ายยา หรือการดูแลการใช้ยาของผู้ป่วย</p><p>ซึ่งแน่นอนครับ สิ่งเหล่านี้ยังเป็นหัวใจสำคัญของวิชาชีพเรา</p><p>แต่คำถามคือ...</p><p><strong>อีก 10 ปีข้างหน้า เภสัชกรจะมีบทบาทอะไรเพิ่มขึ้นจากวันนี้บ้าง?</strong></p><p class="direction">[มองผู้ฟัง]</p><p>เพราะเทคโนโลยีการรักษากำลังเปลี่ยนไป ความรู้ทางวิทยาศาสตร์กำลังก้าวหน้าไปอย่างรวดเร็ว</p><p>และสิ่งเหล่านี้กำลังเปิดโอกาสใหม่ ๆ ให้กับวิชาชีพของเราครับ</p></div>
+      
+    </article><article class="cue role-nun" id="cue-11" data-idx="11" data-role="nun" data-section="future">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>13:00</time></div>
+      <h2>น้องนุ่น · ATMP / Radiopharmacy / Wellness</h2>
+      
+      <div class="cue-text"><p>โดยเฉพาะเทคโนโลยีการรักษาขั้นสูง หรือ Advanced Therapy Medicinal Products การใช้เภสัชภัณฑ์รังสี หรือ Radiopharmacy รวมถึงบทบาทของเภสัชกรในด้าน Wellness Pharmacy ซึ่งเป็นประเด็นที่น่าสนใจและมีแนวโน้มจะมีบทบาทเพิ่มมากขึ้นในอนาคตค่ะ</p></div>
+      
+    </article><article class="cue role-me" id="cue-12" data-idx="12" data-role="me" data-section="future">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>13:00</time></div>
+      <h2>ส่งเข้าสู่ Future Pharmacy Practice</h2>
+      
+      <div class="cue-text"><p class="direction">[เน้น]</p><p>ผมคิดว่าสิ่งที่น่าสนใจไม่ได้มีเพียงแค่ว่าเทคโนโลยีใหม่ ๆ เหล่านี้ทำอะไรได้บ้าง</p><p>แต่รวมถึงคำถามว่า...</p><p><strong>แล้วเภสัชกรอย่างพวกเราต้องเตรียมความพร้อมอย่างไร เพื่อเป็นส่วนหนึ่งของอนาคตนั้น</strong></p><p>เพราะบางครั้ง อนาคตของวิชาชีพอาจไม่ได้อยู่ไกลอย่างที่เราคิดนะครับ</p><p>สิ่งที่กำลังศึกษาและพัฒนาอยู่ในวันนี้ อาจกลายเป็นส่วนหนึ่งของการทำงานประจำในวันข้างหน้า</p><p>และนี่คือสิ่งที่เราจะได้เรียนรู้ร่วมกันในหัวข้อ</p><p><strong>“Future Pharmacy Practice: Advanced Therapy Medicinal Products (ATMP), Radiopharmacy and Wellness Pharmacy”</strong> ครับ</p></div>
+      
+    </article><article class="cue role-nun" id="cue-13" data-idx="13" data-role="nun" data-section="future">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>13:00</time></div>
+      <h2>น้องนุ่น · เชิญ Moderator</h2>
+      <div class="detail">ผศ.ดร.ภญ.รจพร วัชโรทยางกูร · ประธานอนุกรรมการ ATMP สภาเภสัชกรรม</div>
+      <div class="cue-text"><p>สำหรับการประชุมในช่วงนี้ เราได้รับเกียรติจาก ผู้ช่วยศาสตราจารย์ ดร.เภสัชกรหญิงรจพร วัชโรทยางกูร ประธานอนุกรรมการ ATMP สภาเภสัชกรรม ให้เกียรติเป็นผู้ดำเนินรายการค่ะ</p></div>
+      <aside class="stage-note">ส่งต่อ Moderator ให้แนะนำวิทยากรทั้งสามท่าน</aside>
+    </article><article class="cue role-nun" id="cue-14" data-idx="14" data-role="nun" data-section="future">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>14:00</time></div>
+      <h2>น้องนุ่น · ขอบคุณเวทีเสวนา</h2>
+      
+      <div class="cue-text"><p>ขอขอบพระคุณผู้ช่วยศาสตราจารย์ ดร.เภสัชกรหญิงรจพร วัชโรทยางกูร และวิทยากรผู้ทรงคุณวุฒิทุกท่านค่ะ สำหรับการแบ่งปันองค์ความรู้และมุมมองเกี่ยวกับอนาคตของการประกอบวิชาชีพเภสัชกรรม</p></div>
+      
+    </article><article class="cue role-me" id="cue-15" data-idx="15" data-role="me" data-section="future">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>14:00</time></div>
+      <h2>เชื่อมเข้าสู่เวทีงานวิจัย</h2>
+      
+      <div class="cue-text"><p class="direction">[มองผู้ฟัง]</p><p>ขอบพระคุณทุกท่านอีกครั้งครับ</p><p>จากการพูดคุยถึงอนาคตของวิชาชีพเมื่อสักครู่ ผมคิดว่ามีเรื่องหนึ่งที่น่าสนใจมาก</p><p>คืออนาคตไม่ได้เกิดขึ้นจากการรอให้เทคโนโลยีใหม่ ๆ เดินเข้ามาหาเราเท่านั้นนะครับ</p><p>แต่อนาคตเกิดจากการที่พวกเราเริ่มตั้งคำถาม เริ่มทำวิจัย และเริ่มพัฒนาวิธีการทำงานใหม่ ๆ ตั้งแต่วันนี้</p><p class="direction">[เว้นจังหวะ]</p><p>และสิ่งเหล่านี้กำลังจะปรากฏให้เราเห็นเป็นรูปธรรมในช่วงถัดไปครับ</p><p>เพราะเราจะเข้าสู่การนำเสนอผลงานวิจัยแบบปากเปล่า หรือ <strong>Oral Presentation ในสาขาการบริหารเภสัชกิจ</strong></p><p>ซึ่งมีงานวิจัยที่น่าสนใจรออยู่ถึง 6 ผลงานครับ</p></div>
+      
+    </article><article class="cue role-nun" id="cue-16" data-idx="16" data-role="nun" data-section="research">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>14:00</time></div>
+      <h2>น้องนุ่น · แนะนำช่วง Oral Presentation</h2>
+      
+      <div class="cue-text"><p>ลำดับต่อไป เป็นการนำเสนอผลงานวิจัยแบบปากเปล่า หรือ Oral Presentation ในสาขาการบริหารเภสัชกิจค่ะ</p><p>การนำเสนอในช่วงนี้มีผลงานที่ผ่านการคัดเลือกจำนวน 6 ผลงาน ซึ่งครอบคลุมประเด็นการพัฒนาระบบบริการเภสัชกรรม การบริหารจัดการยา การวิเคราะห์ต้นทุน และการประยุกต์ใช้เทคโนโลยีเพื่อเพิ่มประสิทธิภาพของระบบบริการสุขภาพค่ะ</p></div>
+      
+    </article><article class="cue role-me" id="cue-17" data-idx="17" data-role="me" data-section="research">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>14:00</time></div>
+      <h2>แนะนำกรรมการผู้ทรงคุณวุฒิ</h2>
+      
+      <div class="cue-text"><p>ขอบคุณครับ</p><p>ก่อนเริ่มการนำเสนอ ผมขออนุญาตแนะนำคณะกรรมการผู้ทรงคุณวุฒิของเราในวันนี้ก่อนนะครับ</p><p>เพราะการนำเสนอผลงานวิจัย นอกจากจะเป็นพื้นที่สำหรับการแบ่งปันความรู้แล้ว ผมคิดว่ายังเป็นโอกาสสำคัญที่จะได้รับคำแนะนำจากผู้ทรงคุณวุฒิด้วย</p><p>บางครั้งคำถามดี ๆ เพียงหนึ่งคำถาม ก็อาจนำไปสู่แนวคิดในการพัฒนางานวิจัยครั้งต่อไปได้ครับ</p><p>สำหรับวันนี้ เราได้รับเกียรติจากคณะกรรมการผู้ทรงคุณวุฒิจากวิทยาลัยบริหารเภสัชกิจ จำนวน 3 ท่าน ได้แก่</p><p><strong>ท่านที่หนึ่ง — รองศาสตราจารย์ ดร.เภสัชกรกร ศรล้ำเลิศวาณิช</strong></p><p><strong>ท่านที่สอง — รองศาสตราจารย์ ดร.เภสัชกรหญิงหทัยกาญจน์ เชาวนพูนผล</strong></p><p><strong>และท่านที่สาม — เภสัชกรผดุงยศ พิสุทธาดามงคล</strong></p><p>ขอเสียงปรบมือต้อนรับ และขอบพระคุณคณะกรรมการทั้งสามท่านด้วยครับ</p></div>
+      <aside class="stage-note">ปรบมือ / รอกรรมการพร้อม</aside>
+    </article><article class="cue role-nun" id="cue-18" data-idx="18" data-role="nun" data-section="research">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>14:00</time></div>
+      <h2>น้องนุ่น · กติกา 10 + 3 + 2 นาที</h2>
+      
+      <div class="cue-text"><p>สำหรับการนำเสนอผลงานของเภสัชกรแต่ละเรื่อง จะใช้เวลารวม 15 นาที โดยแบ่งเป็นการนำเสนอ 10 นาที การซักถามและตอบข้อซักถามจากคณะกรรมการ 3 นาที และเวลาเปลี่ยนผู้นำเสนออีก 2 นาทีค่ะ</p></div>
+      
+    </article><article class="cue role-me" id="cue-19" data-idx="19" data-role="me" data-section="research">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>14:00</time></div>
+      <h2>กติกาจับเวลา · แนะนำจอ</h2>
+      
+      <div class="cue-text"><p>สำหรับระบบการจับเวลาในวันนี้ เรามีการเตรียมความพร้อมไว้ให้ทั้งคณะกรรมการและผู้นำเสนอครับ</p><p>โดยคณะกรรมการจะสามารถติดตามเวลาได้จากนาฬิกาที่แสดงอยู่บริเวณมุมขวาของจอบนเวที</p><p>ส่วนผู้นำเสนอจะมีจอด้านล่างเวทีจำนวน 2 จอ สำหรับดูสไลด์และติดตามเวลาของตัวเองครับ</p><p class="direction">[ยิ้มเล็กน้อย]</p><p>ผมคิดว่าทุกท่านที่เคยนำเสนอผลงานวิชาการคงเข้าใจดีนะครับว่า...</p><p><strong>เวลา 10 นาทีบนเวที บางครั้งรู้สึกผ่านไปเร็วกว่าเวลา 10 นาทีตอนเรารอประชุมเสียอีก</strong></p><p class="direction">[เว้นจังหวะเล็กน้อย]</p><p>ดังนั้น ขอให้ทุกท่านช่วยกันบริหารเวลาให้เป็นไปตามกำหนดนะครับ เพื่อให้การนำเสนอทุกผลงานเป็นไปอย่างราบรื่น และเป็นธรรมกับทุกท่านครับ</p></div>
+      
+    </article><article class="cue role-nun" id="cue-20" data-idx="20" data-role="nun" data-section="research">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>14:00</time></div>
+      <h2>น้องนุ่น · เตรียมตัวก่อนนำเสนอ</h2>
+      
+      <div class="cue-text"><p>และขอความร่วมมือผู้นำเสนอในลำดับถัดไป เตรียมความพร้อมล่วงหน้าด้วยนะคะ</p><p>เมื่อทุกท่านพร้อมแล้ว เรามาเริ่มรับฟังผลงานเรื่องแรกกันเลยค่ะ</p></div>
+      
+    </article><article class="cue role-me" id="cue-21" data-idx="21" data-role="me" data-section="research">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>14:00–14:15</time></div>
+      <h2>ผลงานที่ 1 · O091</h2>
+      <div class="detail">ผู้นำเสนอ: ภญ.วัชรินทร์ ไชยถา | ถอดรหัสความสำเร็จการสาธารณสุขชายแดน: การประเมินประสิทธิผล 42 เดือนของโครงการเภสัชกรรมทางไกล โรงพยาบาลเชียงแสน</div>
+      <div class="cue-text"><p>ผลงานเรื่องแรกของเราในวันนี้น่าสนใจมากครับ</p><p>เพราะเป็นเรื่องของการนำเทคโนโลยีมาช่วยลดข้อจำกัดในการเข้าถึงบริการเภสัชกรรม</p><p class="direction">[เว้นจังหวะ]</p><p>ลองนึกถึงประชาชนที่อาศัยอยู่ในพื้นที่ห่างไกลนะครับ</p><p>บางครั้งระยะทางอาจเป็นอุปสรรคสำคัญในการเข้าถึงบริการสุขภาพ</p><p>คำถามคือ <strong>เราจะใช้เภสัชกรรมทางไกลเข้ามาช่วยตอบโจทย์นี้ได้อย่างไร</strong></p><p>และที่สำคัญ งานวิจัยนี้เป็นการประเมินผลต่อเนื่องยาวนานถึง 42 เดือนครับ</p><p>ขอเรียนเชิญ <strong>เภสัชกรหญิงวัชรินทร์ ไชยถา</strong></p><p>นำเสนอผลงานเรื่อง</p><p><strong>“ถอดรหัสความสำเร็จการสาธารณสุขชายแดน: การประเมินประสิทธิผล 42 เดือนของโครงการเภสัชกรรมทางไกล โรงพยาบาลเชียงแสน”</strong></p><p>ขอเรียนเชิญครับ</p></div>
+      <aside class="stage-note">เชิญผู้นำเสนอขึ้นเวที / ส่งสัญญาณจับเวลา</aside>
+    </article><article class="cue role-nun" id="cue-22" data-idx="22" data-role="nun" data-section="research">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>14:15–14:30</time></div>
+      <h2>ผลงานที่ 2 · O054</h2>
+      <div class="detail">ผู้นำเสนอ: ภญ.กชพร ทิพย์โอสถ | COST ANALYSIS OF INTRAVITREAL INJECTION IN A SEMI-STERILE SERVICE UNIT MODEL COMPARED TO AN OPERATING ROOM SETTING IN THAILAND</div>
+      <div class="cue-text"><p>ขอขอบคุณผู้นำเสนอท่านแรกและคณะกรรมการทุกท่านค่ะ</p><p>สำหรับผลงานลำดับต่อไป เป็นการวิเคราะห์ต้นทุนของการให้ยาฉีดเข้าวุ้นตา โดยเปรียบเทียบรูปแบบการให้บริการในหน่วยบริการกึ่งปลอดเชื้อกับห้องผ่าตัด ซึ่งเป็นประเด็นที่น่าสนใจในด้านการบริหารทรัพยากรและต้นทุนบริการสุขภาพค่ะ</p><p>ขอเรียนเชิญเภสัชกรหญิงกชพร ทิพย์โอสถ นำเสนอผลงานเรื่อง “Cost Analysis of Intravitreal Injection in a Semi-Sterile Service Unit Model Compared to an Operating Room Setting in Thailand”</p><p>ขอเรียนเชิญค่ะ</p></div>
+      <aside class="stage-note">เชิญผู้นำเสนอขึ้นเวที / ส่งสัญญาณจับเวลา</aside>
+    </article><article class="cue role-me" id="cue-23" data-idx="23" data-role="me" data-section="research">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>14:30–14:45</time></div>
+      <h2>ผลงานที่ 3 · O038</h2>
+      <div class="detail">ผู้นำเสนอ: ดนัยา ชนะชัยวิบูลวัฒน์ | การพัฒนาโมดูลระบบยาเพื่อเพิ่มประสิทธิภาพการจัดเก็บยาในหน่วยบริการปฐมภูมิ จังหวัดลพบุรี</div>
+      <div class="cue-text"><p>ขอบคุณสำหรับการนำเสนอผลงานเรื่องที่ผ่านมาครับ</p><p>ผลงานลำดับถัดไปเป็นเรื่องที่เกี่ยวข้องกับการบริหารจัดการระบบยาโดยตรง</p><p>ผมเชื่อว่าพี่น้องเภสัชกรหลายท่านน่าจะเคยมีประสบการณ์คล้าย ๆ กันนะครับ</p><p>บางครั้งการทำงานของเราไม่ได้ติดขัดเพราะขาดความรู้เรื่องยา</p><p>แต่ติดขัดเพราะระบบการจัดเก็บข้อมูล หรือกระบวนการทำงานที่ยังไม่คล่องตัวเท่าที่ควร</p><p class="direction">[เน้น]</p><p>และนี่คือจุดที่การพัฒนาระบบเข้ามาช่วยได้ครับ</p><p>ขอเรียนเชิญ <strong>คุณดนัยา ชนะชัยวิบูลวัฒน์</strong></p><p>นำเสนอผลงานเรื่อง</p><p><strong>“การพัฒนาโมดูลระบบยาเพื่อเพิ่มประสิทธิภาพการจัดเก็บยาในหน่วยบริการปฐมภูมิ จังหวัดลพบุรี”</strong></p><p>ขอเรียนเชิญครับ</p></div>
+      <aside class="stage-note">เชิญผู้นำเสนอขึ้นเวที / ส่งสัญญาณจับเวลา</aside>
+    </article><article class="cue role-nun" id="cue-24" data-idx="24" data-role="nun" data-section="research">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>14:45–15:00</time></div>
+      <h2>ผลงานที่ 4 · O030</h2>
+      <div class="detail">ผู้นำเสนอ: ภก.ตนุภัทร จำนงค์ศรี | การพัฒนาการสร้างความตระหนักในการสั่งใช้ยานอกบัญชียาหลักแห่งชาติ ในผู้ป่วยนอกสิทธิหลักประกันสุขภาพแห่งชาติ โรงพยาบาลกาฬสินธุ์</div>
+      <div class="cue-text"><p>ขอขอบคุณสำหรับการนำเสนอผลงานเรื่องที่สามค่ะ</p><p>สำหรับผลงานลำดับต่อไป เป็นประเด็นเกี่ยวกับการสร้างความตระหนักในการสั่งใช้ยานอกบัญชียาหลักแห่งชาติ ซึ่งเชื่อมโยงกับการใช้ยาอย่างสมเหตุผลและการบริหารจัดการทรัพยากรด้านยาของระบบสุขภาพค่ะ</p><p>ขอเรียนเชิญเภสัชกรตนุภัทร จำนงค์ศรี นำเสนอผลงานเรื่อง “การพัฒนาการสร้างความตระหนักในการสั่งใช้ยานอกบัญชียาหลักแห่งชาติ ในผู้ป่วยนอกสิทธิหลักประกันสุขภาพแห่งชาติ โรงพยาบาลกาฬสินธุ์”</p><p>ขอเรียนเชิญค่ะ</p></div>
+      <aside class="stage-note">เชิญผู้นำเสนอขึ้นเวที / ส่งสัญญาณจับเวลา</aside>
+    </article><article class="cue role-me" id="cue-25" data-idx="25" data-role="me" data-section="research">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>15:00–15:15</time></div>
+      <h2>ผลงานที่ 5 · O013</h2>
+      <div class="detail">ผู้นำเสนอ: ภก.ดุสิต พันละม้าย | ยาเหลือใช้ในโรงพยาบาลสตูล: ขนาดปัญหา รูปแบบ สาเหตุ และภาระงานในการจัดการ</div>
+      <div class="cue-text"><p>ขอบคุณสำหรับการนำเสนอผลงานเรื่องที่สี่ครับ</p><p>ผลงานลำดับต่อไป ผมคิดว่าน่าจะเป็นเรื่องที่ใกล้ตัวพวกเราแทบทุกคนเลยนะครับ</p><p>นั่นคือ <strong>ยาเหลือใช้</strong></p><p class="direction">[เว้นจังหวะ]</p><p>ยาเหลือใช้หนึ่งรายการ อาจดูเป็นเรื่องเล็กนะครับ</p><p>แต่ถ้าเราลองมองทั้งโรงพยาบาล หรือทั้งระบบสุขภาพ คำถามก็คือ...</p><p>ยาเหลือใช้เหล่านี้เกิดขึ้นจากอะไร มีขนาดปัญหามากน้อยเพียงใด และต้องใช้ทรัพยากรในการจัดการเท่าไร</p><p>ซึ่งล้วนเป็นคำถามที่สำคัญต่อการบริหารระบบยาครับ</p><p>ขอเรียนเชิญ <strong>เภสัชกรดุสิต พันละม้าย</strong></p><p>นำเสนอผลงานเรื่อง</p><p><strong>“ยาเหลือใช้ในโรงพยาบาลสตูล: ขนาดปัญหา รูปแบบ สาเหตุ และภาระงานในการจัดการ”</strong></p><p>ขอเรียนเชิญครับ</p></div>
+      <aside class="stage-note">เชิญผู้นำเสนอขึ้นเวที / ส่งสัญญาณจับเวลา</aside>
+    </article><article class="cue role-nun" id="cue-26" data-idx="26" data-role="nun" data-section="research">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>15:15–15:30</time></div>
+      <h2>ผลงานที่ 6 · O102</h2>
+      <div class="detail">ผู้นำเสนอ: ศิวกร สีสุวรรณ์ | MACHINE LEARNING FORECASTING AND RISK-BASED INVENTORY OPTIMIZATION FOR PHARMACY STOCK RESILIENCE UNDER WAR-LIKE DISRUPTIONS – A CASE STUDY OF CHULABHORN HOSPITAL</div>
+      <div class="cue-text"><p>ขอบคุณสำหรับการนำเสนอผลงานเรื่องที่ห้าค่ะ</p><p>และก็มาถึงผลงานลำดับสุดท้ายของช่วง Oral Presentation สำหรับเภสัชกรแล้วนะคะ</p><p>ผลงานเรื่องนี้เป็นการประยุกต์ใช้ Machine Learning เพื่อพยากรณ์และบริหารจัดการคลังยา โดยคำนึงถึงความเสี่ยงจากสถานการณ์ที่อาจส่งผลกระทบต่อห่วงโซ่อุปทานยา ซึ่งเป็นอีกหนึ่งความท้าทายสำคัญของระบบสุขภาพในปัจจุบันค่ะ</p><p>ขอเรียนเชิญคุณศิวกร สีสุวรรณ์ นำเสนอผลงานเรื่อง “Machine Learning Forecasting and Risk-Based Inventory Optimization for Pharmacy Stock Resilience Under War-Like Disruptions – A Case Study of Chulabhorn Hospital”</p><p>ขอเรียนเชิญค่ะ</p></div>
+      <aside class="stage-note">เชิญผู้นำเสนอขึ้นเวที / ส่งสัญญาณจับเวลา</aside>
+    </article><article class="cue role-me" id="cue-27" data-idx="27" data-role="me" data-section="research">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>15:30</time></div>
+      <h2>สรุป 6 ผลงานและขอบคุณกรรมการ</h2>
+      
+      <div class="cue-text"><p class="direction">[มองผู้ฟัง]</p><p>และตอนนี้การนำเสนอผลงานวิจัยของเภสัชกรทั้ง 6 ผลงาน ก็เสร็จสิ้นลงแล้วนะครับ</p><p>ผมคิดว่าสิ่งที่น่าสนใจอย่างหนึ่งจากการมีเวทีลักษณะนี้ ก็คือการทำให้เราเห็นว่า...</p><p><strong>งานวิจัยทางเภสัชกรรมไม่ได้จำกัดอยู่เฉพาะในห้องปฏิบัติการเท่านั้น</strong></p><p>แต่ยังเชื่อมโยงกับระบบบริการ การบริหารจัดการทรัพยากร ต้นทุน และเทคโนโลยีใหม่ ๆ ที่เกี่ยวข้องกับการดูแลประชาชน</p><p>ในโอกาสนี้ ขอขอบพระคุณคณะกรรมการผู้ทรงคุณวุฒิทั้งสามท่าน และขอขอบคุณผู้นำเสนอทุกท่านครับ</p></div>
+      
+    </article><article class="cue role-nun" id="cue-28" data-idx="28" data-role="nun" data-section="research">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>15:30</time></div>
+      <h2>น้องนุ่น · QR / ส่งเข้าสู่ช่วงนักศึกษา</h2>
+      
+      <div class="cue-text"><p>ก่อนเข้าสู่กิจกรรมถัดไป ขอเชิญทุกท่านร่วมทำแบบประเมิน Session นี้ผ่าน QR Code และอย่าลืมสแกนรับสิทธิ์หมุนวงล้อลุ้นของที่ระลึกจาก PRIS 2026 กันด้วยนะคะ</p><p>และลำดับต่อไป เราจะเข้าสู่ช่วงการนำเสนอผลงานวิจัยของนิสิตนักศึกษาเภสัชศาสตร์ค่ะ</p></div>
+      
+    </article><article class="cue role-me" id="cue-29" data-idx="29" data-role="me" data-section="student">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>15:30</time></div>
+      <h2>เปิดเวทีนักศึกษา · คำถามที่ดี</h2>
+      
+      <div class="cue-text"><p class="direction">[น้ำเสียงสดใสขึ้นเล็กน้อย]</p><p>และช่วงต่อไปนี้เป็นอีกช่วงหนึ่งที่ผมรอคอยครับ</p><p>เพราะเรากำลังจะได้พบกับผลงานวิจัยของนิสิตนักศึกษาเภสัชศาสตร์</p><p class="direction">[เว้นจังหวะ]</p><p>ผมทำงานกับนักศึกษาอยู่เหมือนกันนะครับ</p><p>และสิ่งหนึ่งที่ผมได้เรียนรู้ก็คือ บางครั้งคำถามที่น่าสนใจมาก ๆ ไม่ได้เกิดจากคนที่มีประสบการณ์ทำงานมานานเท่านั้น</p><p>แต่อาจเกิดจากคนรุ่นใหม่ที่กล้าตั้งคำถามว่า...</p><p><strong>ทำไมเราต้องทำแบบเดิม และมีวิธีอื่นที่ดีกว่านี้หรือเปล่า?</strong></p><p class="direction">[ยิ้ม]</p><p>นี่จึงเป็นเสน่ห์อย่างหนึ่งของการทำวิจัยครับ</p><p>เพราะงานวิจัยที่ดีไม่ได้เริ่มจากการมีคำตอบทั้งหมด</p><p>แต่เริ่มจากการมีคำถามที่ดี และความพยายามที่จะหาคำตอบอย่างเป็นระบบ</p><p>สำหรับช่วงนี้ เรามีผลงานที่ผ่านการคัดเลือกทั้งหมด 6 ผลงาน</p><p>ครอบคลุมทั้งความปลอดภัยด้านยา เศรษฐศาสตร์สาธารณสุข การใช้ AI และการศึกษาทางคลินิกครับ</p></div>
+      
+    </article><article class="cue role-nun" id="cue-30" data-idx="30" data-role="nun" data-section="student">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>15:30</time></div>
+      <h2>น้องนุ่น · กรรมการชุดเดิม / กติกา 6 + 2 + 2</h2>
+      
+      <div class="cue-text"><p>สำหรับคณะกรรมการประเมินผลงาน ยังคงเป็นคณะกรรมการผู้ทรงคุณวุฒิจากวิทยาลัยบริหารเภสัชกิจทั้งสามท่านเช่นเดิมค่ะ</p><p>ทั้งนี้ การนำเสนอผลงานของนิสิตนักศึกษาแต่ละเรื่องจะใช้เวลารวม 10 นาที แบ่งเป็นการนำเสนอ 6 นาที การซักถามและตอบข้อซักถามจากคณะกรรมการ 2 นาที และเวลาเปลี่ยนผู้นำเสนออีก 2 นาทีค่ะ</p></div>
+      
+    </article><article class="cue role-me" id="cue-31" data-idx="31" data-role="me" data-section="student">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>15:30</time></div>
+      <h2>ให้กำลังใจนักศึกษา · เริ่มการนำเสนอ</h2>
+      
+      <div class="cue-text"><p>ขอให้น้อง ๆ ผู้นำเสนอทุกท่านช่วยบริหารเวลาให้เป็นไปตามกำหนดนะครับ</p><p class="direction">[ยิ้ม]</p><p>ผมทราบดีครับว่า เวลาเตรียมงานวิจัย เราอาจใช้เวลากันเป็นเดือน เป็นปี</p><p>แต่วันนี้เราต้องเล่าให้ทุกคนเข้าใจภายใน 6 นาที</p><p>ซึ่งผมคิดว่านอกจากจะเป็นการนำเสนอผลงานวิจัยแล้ว ยังเป็นการฝึกทักษะการสื่อสารทางวิชาการที่สำคัญมากด้วยครับ</p><p>ขอให้น้อง ๆ ทุกคนสนุกกับการนำเสนอ และใช้โอกาสนี้แลกเปลี่ยนเรียนรู้กับคณะกรรมการอย่างเต็มที่นะครับ</p><p>เมื่อพร้อมแล้ว เรามาเริ่มรับฟังผลงานเรื่องแรกกันเลยครับ</p></div>
+      
+    </article><article class="cue role-me" id="cue-32" data-idx="32" data-role="me" data-section="student">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>15:30–15:40</time></div>
+      <h2>ผลงานที่ 1 · O051</h2>
+      <div class="detail">ผู้นำเสนอ: ลักษณา เปล่งปลั่งศร | VALIDATION OF LASA DRUG IN THAILAND: INJECTABLE AND OTHER DOSAGE FORMS</div>
+      <div class="cue-text"><p>ผลงานแรกของนิสิตนักศึกษาในวันนี้ เป็นเรื่องที่เกี่ยวข้องกับความปลอดภัยในการใช้ยาครับ</p><p>นั่นคือเรื่องของยา Look-Alike Sound-Alike หรือ LASA</p><p class="direction">[เว้นจังหวะ]</p><p>ชื่อยาที่คล้ายกัน หรือรูปลักษณ์ที่ใกล้เคียงกัน อาจนำไปสู่ความคลาดเคลื่อนทางยาได้</p><p>และนี่คือเหตุผลว่าทำไมการศึกษาประเด็น LASA จึงมีความสำคัญต่อระบบความปลอดภัยด้านยา</p><p>ขอเรียนเชิญ <strong>คุณลักษณา เปล่งปลั่งศร</strong></p><p>นำเสนอผลงานเรื่อง</p><p><strong>“Validation of LASA Drug in Thailand: Injectable and Other Dosage Forms”</strong></p><p>ขอเรียนเชิญครับ</p></div>
+      <aside class="stage-note">เชิญผู้นำเสนอขึ้นเวที / ส่งสัญญาณจับเวลา</aside>
+    </article><article class="cue role-nun" id="cue-33" data-idx="33" data-role="nun" data-section="student">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>15:40–15:50</time></div>
+      <h2>ผลงานที่ 2 · P114</h2>
+      <div class="detail">ผู้นำเสนอ: นลินี สุวรรณศิลป์ | RAPID COST-UTILITY ANALYSIS OF CDK4/6 INHIBITORS PLUS LETROZOLE FOR POSTMENOPAUSAL WOMEN WITH HR-POSITIVE, HER2-NEGATIVE ADVANCED BREAST CANCER (ABC)</div>
+      <div class="cue-text"><p>ขอบคุณสำหรับการนำเสนอผลงานเรื่องแรกค่ะ</p><p>ผลงานลำดับที่สองเป็นการวิเคราะห์ความคุ้มค่าทางเศรษฐศาสตร์ของการใช้ยา CDK4/6 inhibitors ร่วมกับ Letrozole ในผู้ป่วยมะเร็งเต้านมระยะลุกลาม ซึ่งเป็นประเด็นที่มีความสำคัญต่อการตัดสินใจด้านเทคโนโลยีสุขภาพค่ะ</p><p>ขอเรียนเชิญคุณนลินี สุวรรณศิลป์ นำเสนอผลงานเรื่อง “Rapid Cost-Utility Analysis of CDK4/6 Inhibitors Plus Letrozole for Postmenopausal Women with HR-Positive, HER2-Negative Advanced Breast Cancer”</p><p>ขอเรียนเชิญค่ะ</p></div>
+      <aside class="stage-note">เชิญผู้นำเสนอขึ้นเวที / ส่งสัญญาณจับเวลา</aside>
+    </article><article class="cue role-me" id="cue-34" data-idx="34" data-role="me" data-section="student">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>15:50–16:00</time></div>
+      <h2>ผลงานที่ 3 · P128</h2>
+      <div class="detail">ผู้นำเสนอ: ธีรพงศ์ บุญตือ | ภาวะซึมเศร้า ความเครียด และการรับรู้การสนับสนุนทางสังคมของผู้ป่วยล้างไตทางช่องท้อง</div>
+      <div class="cue-text"><p>ขอบคุณสำหรับการนำเสนอผลงานที่ผ่านมา ครับ</p><p>ผลงานเรื่องถัดไป ผมคิดว่าเป็นประเด็นที่สำคัญมากในมิติของการดูแลผู้ป่วยแบบองค์รวม</p><p class="direction">[เว้นจังหวะ]</p><p>เวลาพูดถึงการรักษาโรค เรามักจะนึกถึงยา ผลตรวจทางห้องปฏิบัติการ หรือผลลัพธ์ทางคลินิกเป็นหลัก</p><p>แต่ในความเป็นจริง ผู้ป่วยไม่ได้มีเพียงแค่มิติทางกายนะครับ</p><p>ยังมีทั้งความเครียด ภาวะทางจิตใจ และการสนับสนุนจากคนรอบข้าง</p><p>ซึ่งเป็นสิ่งที่บุคลากรสุขภาพไม่ควรมองข้ามครับ</p><p>ขอเรียนเชิญ <strong>คุณธีรพงศ์ บุญตือ</strong></p><p>นำเสนอผลงานเรื่อง</p><p><strong>“ภาวะซึมเศร้า ความเครียด และการรับรู้การสนับสนุนทางสังคมของผู้ป่วยล้างไตทางช่องท้อง”</strong></p><p>ขอเรียนเชิญครับ</p></div>
+      <aside class="stage-note">เชิญผู้นำเสนอขึ้นเวที / ส่งสัญญาณจับเวลา</aside>
+    </article><article class="cue role-nun" id="cue-35" data-idx="35" data-role="nun" data-section="student">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>16:00–16:10</time></div>
+      <h2>ผลงานที่ 4 · O997</h2>
+      <div class="detail">ผู้นำเสนอ: คชา สุขเจริญเมือง | การพัฒนาโมเดลปัญญาประดิษฐ์สำหรับการพยากรณ์ขนาดของยากลุ่ม Opioid Analgesics และ Sedatives ที่เหมาะสมในกลุ่มผู้ป่วยที่มีภาวะความปวด กระวนกระวาย และเพ้อคลั่งในหอผู้ป่วยวิกฤติ</div>
+      <div class="cue-text"><p>ขอบคุณสำหรับการนำเสนอผลงานเรื่องที่สามค่ะ</p><p>สำหรับผลงานลำดับที่สี่ เป็นการนำเทคโนโลยีปัญญาประดิษฐ์ หรือ AI มาประยุกต์ใช้เพื่อพยากรณ์ขนาดยาที่เหมาะสมในผู้ป่วยวิกฤติ ซึ่งเป็นอีกหนึ่งตัวอย่างของการเชื่อมโยงเทคโนโลยีเข้ากับการบริบาลทางเภสัชกรรมค่ะ</p><p>ขอเรียนเชิญคุณคชา สุขเจริญเมือง นำเสนอผลงานเรื่อง “การพัฒนาโมเดลปัญญาประดิษฐ์สำหรับการพยากรณ์ขนาดของยากลุ่ม Opioid Analgesics และ Sedatives ที่เหมาะสมในกลุ่มผู้ป่วยที่มีภาวะความปวด กระวนกระวาย และเพ้อคลั่งในหอผู้ป่วยวิกฤติ”</p><p>ขอเรียนเชิญค่ะ</p></div>
+      <aside class="stage-note">เชิญผู้นำเสนอขึ้นเวที / ส่งสัญญาณจับเวลา</aside>
+    </article><article class="cue role-me" id="cue-36" data-idx="36" data-role="me" data-section="student">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>16:10–16:20</time></div>
+      <h2>ผลงานที่ 5 · O998</h2>
+      <div class="detail">ผู้นำเสนอ: อิสริญาจ์ ศรีเศวตศุภรักษ์ | การศึกษาความคุ้มค่าทางเศรษฐศาสตร์ของการตรวจยีน NAT2 ในการป้องกันภาวะตับอักเสบจากยา Isoniazid ในผู้ป่วยติดเชื้อวัณโรคระยะแฝง</div>
+      <div class="cue-text"><p>ขอบคุณสำหรับการนำเสนอผลงานที่ผ่านมา ครับ</p><p>ผลงานถัดไปเป็นประเด็นที่เชื่อมโยงระหว่างเภสัชพันธุศาสตร์กับเศรษฐศาสตร์สาธารณสุขครับ</p><p class="direction">[เว้นจังหวะ]</p><p>เราทราบกันดีว่าผู้ป่วยแต่ละคนอาจตอบสนองต่อยาแตกต่างกัน</p><p>หนึ่งในปัจจัยที่เกี่ยวข้องก็คือพันธุกรรมของแต่ละบุคคล</p><p>แต่คำถามสำคัญในเชิงระบบสุขภาพก็คือ...</p><p><strong>หากเรานำข้อมูลทางพันธุกรรมมาใช้เพื่อเพิ่มความปลอดภัยในการรักษา จะมีความคุ้มค่าทางเศรษฐศาสตร์มากน้อยเพียงใด</strong></p><p>นี่เป็นประเด็นที่งานวิจัยลำดับต่อไปจะนำมาเสนอครับ</p><p>ขอเรียนเชิญ <strong>คุณอิสริญาจ์ ศรีเศวตศุภรักษ์</strong></p><p>นำเสนอผลงานเรื่อง</p><p><strong>“การศึกษาความคุ้มค่าทางเศรษฐศาสตร์ของการตรวจยีน NAT2 ในการป้องกันภาวะตับอักเสบจากยา Isoniazid ในผู้ป่วยติดเชื้อวัณโรคระยะแฝง”</strong></p><p>ขอเรียนเชิญครับ</p></div>
+      <aside class="stage-note">เชิญผู้นำเสนอขึ้นเวที / ส่งสัญญาณจับเวลา</aside>
+    </article><article class="cue role-nun" id="cue-37" data-idx="37" data-role="nun" data-section="student">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>16:20–16:30</time></div>
+      <h2>ผลงานที่ 6 · O999</h2>
+      <div class="detail">ผู้นำเสนอ: กรรณิการ์ ฝาชัยภูมิ | การทบทวนวรรณกรรมอย่างเป็นระบบ: ยากลุ่ม Renin-Angiotensin-Aldosterone System (RAAS) Inhibitors ที่มีผลช่วยลดความผิดปกติของไมโทคอนเดรียในโรคระบบหัวใจและหลอดเลือด</div>
+      <div class="cue-text"><p>ขอบคุณสำหรับการนำเสนอผลงานเรื่องที่ห้าค่ะ</p><p>และก็มาถึงผลงานลำดับสุดท้ายของการนำเสนอในห้อง JUPITER 12 วันนี้แล้วนะคะ</p><p>ผลงานเรื่องสุดท้ายเป็นการทบทวนวรรณกรรมอย่างเป็นระบบเกี่ยวกับยากลุ่ม RAAS Inhibitors และบทบาทต่อความผิดปกติของไมโทคอนเดรียในโรคระบบหัวใจและหลอดเลือดค่ะ</p><p>ขอเรียนเชิญคุณกรรณิการ์ ฝาชัยภูมิ นำเสนอผลงานเรื่อง “การทบทวนวรรณกรรมอย่างเป็นระบบ: ยากลุ่ม Renin-Angiotensin-Aldosterone System (RAAS) Inhibitors ที่มีผลช่วยลดความผิดปกติของไมโทคอนเดรียในโรคระบบหัวใจและหลอดเลือด”</p><p>ขอเรียนเชิญค่ะ</p></div>
+      <aside class="stage-note">เชิญผู้นำเสนอขึ้นเวที / ส่งสัญญาณจับเวลา</aside>
+    </article><article class="cue role-me" id="cue-38" data-idx="38" data-role="me" data-section="end">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>16:30</time></div>
+      <h2>สรุปทั้งวัน · คุณค่าของการวิจัย</h2>
+      
+      <div class="cue-text"><p class="direction">[มองผู้ฟัง / พูดช้าลงเล็กน้อย]</p><p>และตอนนี้ การนำเสนอผลงานวิจัยของนิสิตนักศึกษาเภสัชศาสตร์ทั้ง 6 ผลงาน ก็เสร็จสิ้นลงแล้วนะครับ</p><p class="direction">[เว้นจังหวะ]</p><p>ตลอดทั้งวันนี้ เราได้ฟังเรื่องราวที่หลากหลายมากครับ</p><p>ตั้งแต่เรื่อง AI กับการคุ้มครองผู้บริโภค อนาคตของวิชาชีพเภสัชกรรม ไปจนถึงงานวิจัยทั้งจากเภสัชกรและนิสิตนักศึกษา</p><p>มีทั้งเรื่องระบบบริการสุขภาพ เทคโนโลยี ความปลอดภัยด้านยา เศรษฐศาสตร์สาธารณสุข และการดูแลผู้ป่วย</p><p class="direction">[เว้นจังหวะ]</p><p>ผมคิดว่าหากมีสิ่งหนึ่งที่เชื่อมโยงผลงานทั้งหมดเข้าด้วยกัน ก็คือ...</p><p><strong>ความพยายามที่จะทำให้ระบบสุขภาพของเราดีขึ้น</strong></p><p>บางผลงานอาจเริ่มจากปัญหาหน้างานเล็ก ๆ</p><p>บางผลงานอาจเริ่มจากคำถามที่ยังไม่มีใครตอบได้ชัดเจน</p><p>แต่ทุกผลงานล้วนมีคุณค่าในฐานะความพยายามที่จะสร้างองค์ความรู้ใหม่ครับ</p><p class="direction">[มองผู้ฟัง]</p><p>และผมเชื่อว่านี่คือเสน่ห์ของการทำวิจัยทางเภสัชกรรม</p><p>เพราะงานวิจัยที่ดี ไม่ได้จบลงเพียงวันที่เรานำเสนอผลงานเสร็จ</p><p>แต่อาจเป็นจุดเริ่มต้นของการพัฒนาบางสิ่งให้ดีขึ้นต่อไปครับ</p></div>
+      
+    </article><article class="cue role-nun" id="cue-39" data-idx="39" data-role="nun" data-section="end">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>16:30</time></div>
+      <h2>น้องนุ่น · ขอบคุณกรรมการและผู้ร่วมงาน</h2>
+      
+      <div class="cue-text"><p>ในโอกาสนี้ ขอขอบพระคุณคณะกรรมการผู้ทรงคุณวุฒิทุกท่าน ที่ได้กรุณาสละเวลาให้ข้อคิดเห็นและข้อเสนอแนะอันเป็นประโยชน์ต่อการพัฒนาผลงานวิจัย</p><p>และขอขอบคุณผู้นำเสนอทุกท่านที่นำผลงานมาแลกเปลี่ยนเรียนรู้ร่วมกัน รวมถึงผู้เข้าร่วมประชุมทุกท่านที่ให้ความสนใจและร่วมรับฟังการนำเสนอตลอดทั้งวันค่ะ</p></div>
+      
+    </article><article class="cue role-me" id="cue-40" data-idx="40" data-role="me" data-section="end">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>16:30</time></div>
+      <h2>QR ประเมินครั้งสุดท้าย</h2>
+      
+      <div class="cue-text"><p>ก่อนออกจากห้องประชุม ขอเชิญทุกท่านสแกน QR Code เพื่อทำแบบประเมิน Session สุดท้าย</p><p>และอย่าลืมสแกนรับสิทธิ์หมุนวงล้อลุ้นของที่ระลึกจาก PRIS 2026 กันด้วยนะครับ</p></div>
+      
+    </article><article class="cue role-nun" id="cue-41" data-idx="41" data-role="nun" data-section="end">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>16:30</time></div>
+      <h2>น้องนุ่น · เชิญกิจกรรมวันพรุ่งนี้</h2>
+      
+      <div class="cue-text"><p>สำหรับการประชุมในวันพรุ่งนี้ วันที่ 30 ตุลาคม 2569 ยังมีกิจกรรมวิชาการที่น่าสนใจอีกมากมาย ขอเชิญทุกท่านติดตามกำหนดการและเข้าร่วมกิจกรรมกันอย่างต่อเนื่องนะคะ</p></div>
+      
+    </article><article class="cue role-me" id="cue-42" data-idx="42" data-role="me" data-section="end">
+      <div class="cue-top"><span class="pill">พี่หมี · บทพูด</span><time>16:30</time></div>
+      <h2>ปิดท้าย · ฝากความหมายของงานวิจัย</h2>
+      
+      <div class="cue-text"><p class="direction">[ยิ้ม / มองผู้ฟัง]</p><p>สุดท้ายนี้ ผมอยากฝากไว้สั้น ๆ ครับว่า...</p><p><strong>บางครั้งงานวิจัยหนึ่งเรื่อง อาจไม่ได้เปลี่ยนโลกทั้งใบในทันที</strong></p><p>แต่ถ้างานวิจัยนั้นช่วยทำให้การดูแลผู้ป่วยดีขึ้นแม้เพียงส่วนหนึ่ง</p><p>ผมคิดว่านั่นก็เป็นคุณค่าที่สำคัญมากแล้วครับ</p><p class="direction">[เว้นจังหวะ]</p><p>ขอขอบพระคุณทุกท่านอีกครั้ง ที่มาร่วมแลกเปลี่ยนเรียนรู้กันในวันนี้</p><p>หวังว่าทุกท่านจะได้ทั้งความรู้ แนวคิด และแรงบันดาลใจกลับไปนะครับ</p><p>ในนามของพิธีกรประจำห้อง JUPITER 12</p><p>ผม อาจารย์ ดร.เภสัชกรวิรุณ เวชศิริ</p></div>
+      
+    </article><article class="cue role-nun" id="cue-43" data-idx="43" data-role="nun" data-section="end">
+      <div class="cue-top"><span class="pill">น้องนุ่น · บทเดิม</span><time>16:30</time></div>
+      <h2>น้องนุ่น · แนะนำตัวปิดท้าย</h2>
+      
+      <div class="cue-text"><p>และดิฉัน เภสัชกรหญิงชนิตรา อินทร์ศิริ</p></div>
+      
+    </article><article class="cue role-both" id="cue-44" data-idx="44" data-role="both" data-section="end">
+      <div class="cue-top"><span class="pill">กล่าวพร้อมกัน</span><time>16:30</time></div>
+      <h2>กล่าวพร้อมกัน</h2>
+      
+      <div class="cue-text"><p>ขอบพระคุณทุกท่าน สวัสดีครับ / สวัสดีค่ะ</p></div>
+      <aside class="stage-note">ปิดรายการ / ส่งสัญญาณทีมเทคนิค</aside>
+    </article><article class="cue role-backup" id="cue-45" data-idx="45" data-role="backup" data-section="extra">
+      <div class="cue-top"><span class="pill">ประกาศสำรอง</span><time>สำรอง</time></div>
+      <h2>ก่อนเริ่มประชุม</h2>
+      
+      <div class="cue-text"><p>เรียนผู้เข้าร่วมประชุมทุกท่านค่ะ/ครับ ขณะนี้ใกล้ถึงเวลาเริ่มการประชุมแล้ว ขอเรียนเชิญทุกท่านเข้าประจำที่นั่งภายในห้องประชุม และขอความกรุณาปรับโทรศัพท์มือถือเป็นระบบสั่น เพื่อไม่ให้รบกวนการประชุม
+ก่อนเริ่มการประชุม ขอเชิญทุกท่านรับชมวิดีโอประชาสัมพันธ์งาน PRIS 2026 และวิดีโอแนะนำความปลอดภัยของสถานที่จัดประชุมค่ะ/ครับ</p></div>
+      <aside class="stage-note">อ่านเมื่อได้รับคิวจากทีมงาน</aside>
+    </article><article class="cue role-backup" id="cue-46" data-idx="46" data-role="backup" data-section="extra">
+      <div class="cue-top"><span class="pill">ประกาศสำรอง</span><time>สำรอง</time></div>
+      <h2>แบบประเมินและลุ้นรางวัล</h2>
+      
+      <div class="cue-text"><p>ขอเชิญทุกท่านร่วมทำแบบประเมินการประชุม โดยสแกน QR Code ที่จัดเตรียมไว้ค่ะ/ครับและพิเศษสำหรับผู้เข้าร่วมประชุมทุกท่าน หลังจากทำแบบประเมินเรียบร้อยแล้ว อย่าลืมสแกน QR Code เพื่อรับสิทธิ์หมุนวงล้อลุ้นของที่ระลึกจาก PRIS 2026 กันด้วยนะคะ/ครับที่สำคัญ สามารถร่วมลุ้นได้ทุก Session ได้แล้วก็ลุ้นได้อีก! เรียกว่ามาประชุมครั้งนี้ ได้ทั้งความรู้ ได้ทั้งแรงบันดาลใจ และยังมีโอกาสได้รับของที่ระลึกกลับบ้านอีกด้วยค่ะ/ครับ</p></div>
+      <aside class="stage-note">อ่านเมื่อได้รับคิวจากทีมงาน</aside>
+    </article><article class="cue role-backup" id="cue-47" data-idx="47" data-role="backup" data-section="extra">
+      <div class="cue-top"><span class="pill">ประกาศสำรอง</span><time>สำรอง</time></div>
+      <h2>Highlighted Poster — 30 ต.ค.</h2>
+      
+      <div class="cue-text"><p>ขอประชาสัมพันธ์สำหรับผู้ที่ผ่านการคัดเลือกให้นำเสนอผลงานในรูปแบบ Pharmacist Highlighted Poster Presentation ทุกท่านค่ะ/ครับ ขอให้ทุกท่านเตรียมความพร้อม ณ Station ที่มีชื่อของท่าน เพื่อรอนำเสนอผลงานในช่วงเวลา 13.00–14.00 น. บริเวณ Foyer</p></div>
+      <aside class="stage-note">ข้อมูลในคลังบทพูดต้นฉบับระบุวันที่ 30 ต.ค. 2569 — ตรวจสอบกับทีมงานก่อนใช้</aside>
+    </article><article class="cue role-backup" id="cue-48" data-idx="48" data-role="backup" data-section="extra">
+      <div class="cue-top"><span class="pill">ประกาศสำรอง</span><time>สำรอง</time></div>
+      <h2>พิธีมอบรางวัล — 30 ต.ค.</h2>
+      
+      <div class="cue-text"><p>ขอเรียนเชิญผู้เข้าร่วมประชุมทุกท่าน โดยเฉพาะผู้นำเสนอผลงาน Oral Presentation และ Poster Presentation ร่วมพิธีมอบรางวัลการนำเสนอผลงานและพิธีปิดการประชุม PRIS 2026 ในเวลา 16.00 น. ณ ห้องประชุมหลัก JUPITER 4–7 ขอเชิญทุกท่านร่วมเป็นกำลังใจและแสดงความยินดีกับผู้ได้รับรางวัลในปีนี้ด้วยนะคะ/ครับ</p></div>
+      <aside class="stage-note">ข้อมูลในคลังบทพูดต้นฉบับระบุวันที่ 30 ต.ค. 2569 — ตรวจสอบกับทีมงานก่อนใช้</aside>
+    </article><article class="cue role-backup" id="cue-49" data-idx="49" data-role="backup" data-section="extra">
+      <div class="cue-top"><span class="pill">ประกาศสำรอง</span><time>สำรอง</time></div>
+      <h2>การเก็บ CPE</h2>
+      
+      <div class="cue-text"><p>ขอประชาสัมพันธ์สำหรับผู้เข้าร่วมประชุมที่ต้องการเก็บหน่วยกิตการศึกษาต่อเนื่องทางเภสัชศาสตร์ หรือ CPE นะคะ/ครับ ทุก Session บรรยายสามารถเก็บหน่วยกิต CPE ได้ โดยขอให้ทุกท่านสแกน QR Code ตามขั้นตอนที่กำหนด และสามารถสอบถามเจ้าหน้าที่ประจำหน้าห้องประชุมได้ค่ะ/ครับ
+ขอย้ำว่า ต้องดำเนินการสแกนทุก Session ที่เข้าร่วม ไม่ใช่เฉพาะ Session แรก เพื่อให้การบันทึกหน่วยกิตของท่านครบถ้วนค่ะ/ครับ</p></div>
+      <aside class="stage-note">อ่านเมื่อได้รับคิวจากทีมงาน</aside>
+    </article><article class="cue role-backup" id="cue-50" data-idx="50" data-role="backup" data-section="extra">
+      <div class="cue-top"><span class="pill">ประกาศสำรอง</span><time>สำรอง</time></div>
+      <h2>กติกาเวลา 10 + 3 + 2</h2>
+      
+      <div class="cue-text"><p>การนำเสนอผลงานของเภสัชกรแต่ละเรื่องใช้เวลารวม 15 นาที โดยแบ่งเป็นการนำเสนอผลงาน 10 นาที คณะกรรมการซักถามและตอบข้อซักถาม 3 นาที และเวลาเปลี่ยนผู้นำเสนอ 2 นาที</p><p>สำหรับระบบการจับเวลา จะมีนาฬิกาแสดงอยู่ที่มุมขวาของจอบนเวที เพื่อให้คณะกรรมการสามารถติดตามเวลาได้ ส่วนผู้นำเสนอจะมีจอแสดงผลบริเวณด้านล่างเวทีจำนวน 2 จอ สำหรับดูสไลด์และเวลาของตนเอง</p><p>จึงขอความร่วมมือผู้นำเสนอทุกท่านบริหารเวลาให้เป็นไปตามกำหนด เพื่อให้การนำเสนอทุกผลงานเป็นไปอย่างราบรื่นและเป็นธรรมค่ะ/ครับ</p></div>
+      <aside class="stage-note">อ่านเมื่อได้รับคิวจากทีมงาน</aside>
+    </article><article class="cue role-backup" id="cue-51" data-idx="51" data-role="backup" data-section="extra">
+      <div class="cue-top"><span class="pill">ประกาศสำรอง</span><time>สำรอง</time></div>
+      <h2>เตือนผู้นำเสนอให้เตรียมพร้อม</h2>
+      
+      <div class="cue-text"><p>ขอความร่วมมือผู้นำเสนอผลงาน Oral Presentation ในลำดับถัดไป เตรียมความพร้อมบริเวณจุดที่เจ้าหน้าที่กำหนด เพื่อให้สามารถขึ้นนำเสนอได้ทันทีเมื่อถึงลำดับของท่านค่ะ/ครับ</p><p>ทั้งนี้ ขอให้ทุกท่านตรวจสอบลำดับการนำเสนอและประสานเจ้าหน้าที่ประจำห้อง หากต้องการความช่วยเหลือเกี่ยวกับไฟล์นำเสนอหรืออุปกรณ์ต่าง ๆ ค่ะ/ครับ</p></div>
+      <aside class="stage-note">อ่านเมื่อได้รับคิวจากทีมงาน</aside>
+    </article></div><div class="current-count" id="count"></div></main>
+<footer class="dock" id="dock"><div class="cue-context" id="currentName">เริ่มรายการ</div><div class="dock-content"><button type="button" class="prev" id="prev">← ย้อนกลับ</button><button type="button" class="next" id="next">คิวถัดไป →</button></div></footer>
+<script>
+(()=>{
+'use strict';
+const cards=[...document.querySelectorAll('.cue')], sectionSelect=document.getElementById('section'), count=document.getElementById('count'), currentName=document.getElementById('currentName'), progress=document.getElementById('progress'), context=document.getElementById('context');
+const prefsKey='pris26_mc_prefs_v2';let saved={};try{saved=JSON.parse(localStorage.getItem(prefsKey)||'{}')||{}}catch(e){}
+let roleFilter=saved.roleFilter==='all'?'all':'me', view=saved.view==='scroll'?'scroll':'cue', font=Math.min(36,Math.max(20,Number(saved.font)||25)), night=!!saved.night, current=Math.min(cards.length-1,Math.max(0,Number(saved.current)||0));
+function visibleIndices(){return cards.map((x,i)=>({x,i})).filter(v=>roleFilter==='all'||v.x.dataset.role!=='nun').map(v=>v.i)}
+function persist(){try{localStorage.setItem(prefsKey,JSON.stringify({roleFilter,view,font,night,current}))}catch(e){}}
+function refresh(forceScroll=false){
+ document.body.classList.toggle('night',night);document.body.classList.toggle('mode-cue',view==='cue');document.body.classList.toggle('mode-scroll',view==='scroll');document.body.classList.toggle('only-me',roleFilter==='me');document.documentElement.style.setProperty('--font',font+'px');
+ document.getElementById('dark').setAttribute('aria-pressed',String(night));document.getElementById('dark').textContent=night?'☀':'☾';
+ document.querySelectorAll('[data-role-filter]').forEach(b=>{let v=b.dataset.roleFilter===roleFilter;b.classList.toggle('active',v);b.setAttribute('aria-pressed',String(v))});
+ document.querySelectorAll('[data-view]').forEach(b=>{let v=b.dataset.view===view;b.classList.toggle('active',v);b.setAttribute('aria-pressed',String(v))});
+ const valid=visibleIndices();if(!valid.includes(current))current=valid.find(x=>x>=current)??valid[valid.length-1];
+ cards.forEach((x,i)=>x.classList.toggle('selected',i===current));
+ const pos=valid.indexOf(current), c=cards[current];count.textContent=`คิว ${pos+1} / ${valid.length}`;
+ currentName.textContent=`${c.querySelector('time').textContent} · ${c.querySelector('h2').textContent}`;
+ progress.style.width=((pos+1)/valid.length*100)+'%';
+ document.getElementById('prev').disabled=pos===0;document.getElementById('next').disabled=pos===valid.length-1;
+ sectionSelect.value=c.dataset.section;
+ let prevNun='';for(let j=current-1;j>=0;j--){if(cards[j].dataset.role==='nun'){prevNun=cards[j].querySelector('h2').textContent;break}if(cards[j].dataset.role==='me')break;}
+ context.innerHTML=roleFilter==='me'&&prevNun?'<strong>ก่อนถึงคิวนี้:</strong> '+escapeHtml(prevNun):'โหมดอ่านเฉพาะบทพี่หมี · กด “ทั้งคู่” เพื่อดูบทน้องนุ่น';
+ persist();
+ if(forceScroll&&view==='cue')window.scrollTo({top:0,behavior:'instant'});
+ if(forceScroll&&view==='scroll')c.scrollIntoView({block:'start',behavior:'instant'});
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function move(n){let ids=visibleIndices(),i=ids.indexOf(current);current=ids[Math.min(ids.length-1,Math.max(0,i+n))];refresh(true)}
+document.getElementById('prev').addEventListener('click',()=>move(-1));document.getElementById('next').addEventListener('click',()=>move(1));
+document.getElementById('fontUp').addEventListener('click',()=>{font=Math.min(36,font+2);refresh()});document.getElementById('fontDown').addEventListener('click',()=>{font=Math.max(20,font-2);refresh()});document.getElementById('dark').addEventListener('click',()=>{night=!night;refresh()});
+document.querySelectorAll('[data-role-filter]').forEach(b=>b.addEventListener('click',()=>{roleFilter=b.dataset.roleFilter;refresh(true)}));
+document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view;refresh(true)}));
+sectionSelect.addEventListener('change',()=>{const id=sectionSelect.value;const ids=visibleIndices();current=ids.find(i=>cards[i].dataset.section===id)??ids[0];refresh(true)});
+document.addEventListener('keydown',e=>{if(e.target.matches('select,button,input'))return;if(view==='cue'){if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();move(1)}if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();move(-1)}}});
+refresh(false);
+})();
+</script></body></html>
